@@ -1,18 +1,27 @@
 #ifndef SCAN_H
 #define SCAN_H
 
+/// COMPONENT
+#include <utils_laser_processing/data/laser_beam.h>
+
 /// SYSTEM
 #include <vector>
 #include <string>
 #include <boost/shared_ptr.hpp>
 
-namespace csapex
+namespace lib_laser_processing
 {
 
 struct Scan
 {
 public:
     typedef boost::shared_ptr<Scan> Ptr;
+
+public:
+    Scan();
+    Scan(const std::vector<float>& ranges, float angle_min, float angle_increment);
+
+    void getRanges(std::vector<float> &out) const;
 
 public:
     struct Header {
@@ -34,8 +43,9 @@ public:
 
     float range_max;
 
-    std::vector<float> ranges;
+    std::vector<LaserBeam> rays;
 
+    bool valid;
 };
 
 }

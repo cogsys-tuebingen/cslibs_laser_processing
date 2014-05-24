@@ -16,22 +16,18 @@ LineFit::~LineFit()
 {
 }
 
-void LineFit::segmentation(const std::vector<float> &reading, const float angular_res, const float min_angle,
-                           const float min_rho, const float max_rho, std::vector<std::vector<LaserBeam> > &segments)
+void LineFit::segmentation(const Scan& scan, std::vector<Segment> &segments)
 {
-    std::vector<LaserBeam> points;
-    utils::polarToCartesian(reading, angular_res, min_angle, min_rho, max_rho, points);
-
     segments.clear();
 
     Eigen::ParametrizedLine<double,2> line;
     Eigen::ParametrizedLine<double,2> last_line;
 
-    assert(reading.size() > 2);
-    std::vector<LaserBeam>::iterator first    = points.begin();
-    std::vector<LaserBeam>::iterator second   = first + 1;
-    std::vector<LaserBeam>::iterator last_fit = first;
-    std::vector<LaserBeam>::iterator end      = points.end();;
+    assert(scan.rays.size() > 2);
+    std::vector<LaserBeam>::const_iterator first    = scan.rays.begin();
+    std::vector<LaserBeam>::const_iterator second   = first + 1;
+    std::vector<LaserBeam>::const_iterator last_fit = first;
+    std::vector<LaserBeam>::const_iterator end      = scan.rays.end();;
     while(true) {
         utils::regression2D(first, second + 1, line);
         if(second == end) {
@@ -55,9 +51,9 @@ void LineFit::segmentation(const std::vector<float> &reading, const float angula
     }
 }
 
-void LineFit::pushbackLineSegment(Eigen::ParametrizedLine<double, 2> line, std::vector<std::vector<LaserBeam> > &segments)
+void LineFit::pushbackLineSegment(Eigen::ParametrizedLine<double, 2> line, std::vector<Segment> &segments)
 {
-    segments.push_back(std::vector<LaserBeam>());
-    segments.back().push_back(line.origin());
-    segments.back().push_back(LaserBeam(line.origin() + line.direction()));
+    segments.push_back(Segment());
+    segments.back().rays.push_back(line.origin());
+    segments.back().rays.push_back(LaserBeam(line.origin() + line.direction()));
 }

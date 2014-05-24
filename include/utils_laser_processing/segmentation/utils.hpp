@@ -61,7 +61,7 @@ inline void polarToCartesian(const std::vector<float> &reading, const float angu
  * @param second            the second Eigen Vector2d
  * @return                  the distance
  */
-inline double distance(const std::vector<LaserBeam>::iterator &first, const std::vector<LaserBeam>::iterator &second)
+inline double distance(const std::vector<LaserBeam>::const_iterator &first, const std::vector<LaserBeam>::const_iterator &second)
 {
     return (first->pos - second->pos).norm();
 }
@@ -74,13 +74,13 @@ inline double distance(const std::vector<LaserBeam>::iterator &first, const std:
  * @param sigma             the maximum distance to consider a point an inlyer
  * @return
  */
-inline bool withinLineFit(const std::vector<LaserBeam>::iterator &first, const std::vector<LaserBeam>::iterator &second,
+inline bool withinLineFit(const std::vector<LaserBeam>::const_iterator &first, const std::vector<LaserBeam>::const_iterator &second,
                           const Eigen::ParametrizedLine<double, 2> &line, const double sigma)
 {
     assert(std::distance(first, second) > 0);
 
     bool fitting = true;
-    for(std::vector<LaserBeam>::iterator it = first; it != second ; ++it) {
+    for(std::vector<LaserBeam>::const_iterator it = first; it != second ; ++it) {
         fitting &= (line.distance(it->pos) < sigma);
     }
 

@@ -26,14 +26,13 @@ public:
     /**
      * @brief Implemenation of the segmentation.
      */
-    void segmentation(const std::vector<float> &reading, const float angular_res, const float min_angle,
-                      const float min_rho, const float max_rho, std::vector<std::vector<LaserBeam> > &segments);
+    void segmentation(const Scan &scan, std::vector<Segment> &segments);
 
 protected:
     double sigma_;          /// the maximum possible variance of points around the fitted line
     double max_distance_;   /// the maximum distance points may have to each other
 
-    void pushbackLineSegment(Eigen::ParametrizedLine<double, 2> line, std::vector<std::vector<LaserBeam> > &segments);
+    void pushbackLineSegment(Eigen::ParametrizedLine<double, 2> line, std::vector<Segment> &segments);
 };
 }
 #endif // LINE_FIT_H

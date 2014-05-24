@@ -23,95 +23,119 @@ using namespace boost::accumulators;
 
 namespace lib_laser_processing {
 
-LegDetector::LegDetector()
-    : min_beams_( 5 )
+LegDetector::LegDetector(unsigned int min_beams, float max_cluster_width, float max_std_dev, float max_distance)
+    : min_beams_( min_beams ), max_cluster_width_( max_cluster_width ),  max_std_dev_( max_std_dev), max_distance_( max_distance )
 {
 }
 
-void LegDetector::update( DistanceSegmentation &segms )
+void LegDetector::setParameters(unsigned int min_beams, float max_cluster_width, float max_std_dev, float max_distance)
+{
+    min_beams_ = min_beams;
+    max_cluster_width_ = max_cluster_width;
+    max_std_dev_ = max_std_dev;
+    max_distance_ = max_distance;
+}
+
+void LegDetector::update( const std::vector<Segment>& segments )
 {
     legs_.clear();
 
     // For each segment
-    DistanceSegmentation::Iterator it = segms.iterator();
-    while ( it.nextSegment()) {
-        // Enough beams?
-        if ( it.length() < min_beams_ )
-            continue;
+    for ( std::vector<Segment>::const_iterator it = segments.begin(); it != segments.end(); ++it ) {
+        const Segment& segment = *it;
 
-        /// @todo Simple check if a segment is far too large
+        Vector2d com;
+        bool is_leg = classify(segment, com);
 
-        // Compute center of mass (COM)
-        Vector2d com( Vector2d::Zero());
-        while ( it.nextBeam())
-            com += it.beam().pos;
-        com /= (double)it.length();
-
-        // Compute maximum and average distance to COM
-        double max = 0;
-        double avr = 0;
-        double d;
-        double count = 0;
-        it.resetBeams();
-        while ( it.nextBeam()) {
-            if ( !it.beam().valid )
-                continue;
-
-            d = (com - it.beam().pos).norm();
-            avr += d;
-            if ( max < d ) max = d;
-            count++;
+        if(is_leg) {
+            Leg leg;
+            leg.pos = com;
+            leg.is_single_leg = false; /// @todo Think about this
+            legs_.push_back( leg );
         }
-        avr /= count;
-
-        // Check maximum distance
-        if ( max > 0.2 )
-            continue;
-
-        // Estimated leg center
-        Vector2d center( com + 0.04*com.normalized());
-
-        /*double min_c = std::numeric_limits<double>::max();
-        double max_c = 0;
-        double avr_c = 0;
-        count = 0;
-        it.resetBeams();
-        while ( it.nextBeam()) {
-            if ( !it.beam().valid )
-                continue;
-
-            d = (center - it.beam().pos).norm();
-            avr_c += d;
-            count++;
-            if ( min_c > d ) min_c = d;
-            if ( max_c < d ) max_c = d;
-        }
-        avr_c /= count;*/
-
-        // Standard deviation
-        accumulator_set<double, stats<tag::variance> > dists;
-        it.resetBeams();
-        while ( it.nextBeam()) {
-            if ( !it.beam().valid )
-                continue;
-            dists((center - it.beam().pos).norm());
-        }
-        double std_dev = std::sqrt( variance( dists ));
-
-        // Check std dev
-        if ( std_dev > 0.05 )
-            continue;
-
-        /// @todo This is a hack. Set a proper maximum distance somewhere
-        if ( com.norm() > 15.0 )
-            continue;
-
-        // Well, this segment might be a leg...
-        Leg leg;
-        leg.pos = com;
-        leg.is_single_leg = max < 0.12; /// @todo Think about this
-        legs_.push_back( leg );
     }
 }
 
+bool LegDetector::classify(const Segment &segment, Vector2d& pos)
+{
+    // Enough beams?
+    if ( segment.rays.size() < min_beams_ ) {
+        return false;
+    }
+
+    /// @todo Simple check if a segment is far too large
+
+    // Compute center of mass (COM)
+    Vector2d com( Vector2d::Zero());
+    for ( std::vector<LaserBeam>::const_iterator beam = segment.rays.begin(); beam != segment.rays.end(); ++beam ) {
+        com += beam->pos;
+    }
+
+    com /= static_cast<double> (segment.rays.size());
+
+    // Compute maximum and average distance to COM
+    double max = 0;
+    double avr = 0;
+    double d;
+    double count = 0;
+    for ( std::vector<LaserBeam>::const_iterator beam = segment.rays.begin(); beam != segment.rays.end(); ++beam ) {
+        if ( !beam->valid ) {
+            continue;
+        }
+
+        d = (com - beam->pos).norm();
+        avr += d;
+        if ( max < d ) {
+            max = d;
+        }
+        count++;
+    }
+    avr /= count;
+
+    // Check maximum distance
+    if ( max > max_cluster_width_ )
+        return false;
+
+    // Estimated leg center
+    Vector2d center( com + 0.04*com.normalized());
+
+    /*double min_c = std::numeric_limits<double>::max();
+    double max_c = 0;
+    double avr_c = 0;
+    count = 0;
+    it.resetBeams();
+    while ( it.nextBeam()) {
+        if ( !it.beam().valid )
+            continue;
+
+        d = (center - it.beam().pos).norm();
+        avr_c += d;
+        count++;
+        if ( min_c > d ) min_c = d;
+        if ( max_c < d ) max_c = d;
+    }
+    avr_c /= count;*/
+
+    // Standard deviation
+    accumulator_set<double, stats<tag::variance> > dists;
+    for ( std::vector<LaserBeam>::const_iterator beam = segment.rays.begin(); beam != segment.rays.end(); ++beam ) {
+        if ( !beam->valid ) {
+            continue;
+        }
+        dists((center - beam->pos).norm());
+    }
+    double std_dev = std::sqrt( variance( dists ));
+
+    // Check std dev
+    if ( std_dev > max_std_dev_ )
+        return false;
+
+    /// @todo This is a hack. Set a proper maximum distance somewhere
+    if ( com.norm() > max_distance_ )
+        return false;
+
+    pos = com;
+
+    return true;
+}
 } // namespace

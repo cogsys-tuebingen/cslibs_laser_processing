@@ -8,6 +8,8 @@
 /// COMPONENT
 #include <utils_laser_processing/common/vector.hpp>
 #include <utils_laser_processing/data/laser_beam.h>
+#include <utils_laser_processing/data/scan.h>
+#include <utils_laser_processing/data/segment.h>
 
 /**
  * @brief The LaserScanSegmentation class is representing an interface for computing laser scans,
@@ -21,13 +23,10 @@ public:
 
     /**
      * @brief Segmentation of a laser range reading.
-     * @param reading           the range reading
-     * @param angular_res       the angular resolution of the range reading
-     * @param min_angle         the minimum angle of the range reading
-     * @param lines             the lines that will be segmented
+     * @param scan     the range reading
+     * @param segments the lines that will be segmented
      */
-    virtual void segmentation(const std::vector<float> &reading, const float angular_res, const float min_angle,
-                              const float min_rho, const float max_rho, std::vector<std::vector<LaserBeam> > &lines) = 0;
+    virtual void segmentation(const Scan& scan, std::vector<Segment> &segments) = 0;
 
     /**
      * @brief ~Scan2DSegmentation destructor.

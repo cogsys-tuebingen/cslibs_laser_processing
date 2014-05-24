@@ -4,7 +4,7 @@
 /// SYSTEM
 #include <utils_laser_processing/data/scan.h>
 
-namespace csapex
+namespace lib_laser_processing
 {
 
 struct LabeledScan : public Scan

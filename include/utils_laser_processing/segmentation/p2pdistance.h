@@ -28,8 +28,7 @@ public:
     /**
      * @brief Implementation of the segmentation.
      */
-    void segmentation(const std::vector<float> &reading, const float angular_res, const float min_angle,
-                      const float min_rho, const float max_rho, std::vector<std::vector<LaserBeam> > &segments);
+    void segmentation(const Scan &scan, std::vector<Segment> &segments);
 
 protected:
     double  max_distance_;      /// the maximum distance between two scan points

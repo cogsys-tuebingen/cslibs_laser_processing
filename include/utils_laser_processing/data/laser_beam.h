@@ -32,6 +32,11 @@ public:
      */
     LaserBeam(const Eigen::Vector2d& pos);
 
+    /**
+     * Create a laser beam. All values will be initialized from polar coordinates
+     */
+    LaserBeam(float angle, float range);
+
     /// Range [m] in laser coordinate system
     float range;
 

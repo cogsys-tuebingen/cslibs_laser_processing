@@ -15,3 +15,11 @@ LaserBeam::LaserBeam(const Eigen::Vector2d& pos)
       valid( true ),
       pos( pos )
 {}
+
+
+LaserBeam::LaserBeam(float angle, float range)
+    : range( range ),
+      yaw( angle ),
+      valid( true ),
+      pos( Eigen::Vector2d(std::cos(angle) * range, std::sin(angle) * range) )
+{}
