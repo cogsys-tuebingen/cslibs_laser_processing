@@ -30,6 +30,15 @@ public:
           yaw( 0 ),
           valid( false )
     {}
+    /**
+     * Create a laser beam. All values will be initialized from the point
+     */
+    LaserBeam(const Eigen::Vector2d& pos)
+        : range( std::sqrt(pos.dot(pos)) ),
+          yaw( std::atan2(pos(1), pos(0)) ),
+          valid( true ),
+          pos( pos )
+    {}
 
     /// Range [m] in laser coordinate system
     float range;

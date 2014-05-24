@@ -20,11 +20,18 @@ include_directories(include
 )
 
 
-add_library( utils_laser_processing
+add_library(utils_laser_processing
+    src/segmentation/segment.cpp
+    src/segmentation/segmentation.cpp
     src/segmentation/distance_segmentation.cpp
+    src/segmentation/p2pline.cpp
+    src/segmentation/p2pdistance.cpp
+    src/segmentation/line_fit.cpp
+
     src/person_filter/leg_detector.cpp
     src/person_filter/person_detector.cpp
     src/person_filter/person_filter.cpp
+
 )
 
 target_link_libraries(utils_laser_processing
