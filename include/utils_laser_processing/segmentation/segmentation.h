@@ -7,7 +7,7 @@
 
 /// COMPONENT
 #include <utils_laser_processing/common/vector.hpp>
-#include <utils_laser_processing/laser_beam.h>
+#include <utils_laser_processing/data/laser_beam.h>
 
 /**
  * @brief The LaserScanSegmentation class is representing an interface for computing laser scans,

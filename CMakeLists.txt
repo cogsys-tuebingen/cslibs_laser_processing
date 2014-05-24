@@ -21,7 +21,11 @@ include_directories(include
 
 
 add_library(utils_laser_processing
-    src/segmentation/segment.cpp
+    src/data/segment.cpp
+    src/data/scan.cpp
+    src/data/labeled_scan.cpp
+    src/data/laser_beam.cpp
+
     src/segmentation/segmentation.cpp
     src/segmentation/distance_segmentation.cpp
     src/segmentation/p2pline.cpp

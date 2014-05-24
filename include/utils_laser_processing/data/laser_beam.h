@@ -25,20 +25,12 @@ public:
     /**
      * Create a laser beam. All values will be initialized to false/zero.
      */
-    LaserBeam()
-        : range( 0 ),
-          yaw( 0 ),
-          valid( false )
-    {}
+    LaserBeam();
+
     /**
      * Create a laser beam. All values will be initialized from the point
      */
-    LaserBeam(const Eigen::Vector2d& pos)
-        : range( std::sqrt(pos.dot(pos)) ),
-          yaw( std::atan2(pos(1), pos(0)) ),
-          valid( true ),
-          pos( pos )
-    {}
+    LaserBeam(const Eigen::Vector2d& pos);
 
     /// Range [m] in laser coordinate system
     float range;

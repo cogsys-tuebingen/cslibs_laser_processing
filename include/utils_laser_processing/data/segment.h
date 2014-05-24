@@ -2,7 +2,7 @@
 #define SEGMENT_H
 
 /// COMPONENT
-#include <utils_laser_processing/laser_beam.h>
+#include <utils_laser_processing/data/laser_beam.h>
 
 /// SYSTEM
 #include <vector>

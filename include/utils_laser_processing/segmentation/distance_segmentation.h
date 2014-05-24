@@ -12,7 +12,7 @@
 #include <vector>
 
 // Project
-#include <utils_laser_processing/laser_beam.h>
+#include <utils_laser_processing/data/laser_beam.h>
 
 namespace lib_laser_processing {
 

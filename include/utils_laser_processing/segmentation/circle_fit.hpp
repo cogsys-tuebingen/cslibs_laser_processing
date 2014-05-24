@@ -6,7 +6,7 @@
 #include <pcl/sample_consensus/impl/sac_model_circle.hpp>
 #include <pcl/sample_consensus/ransac.h>
 #include <pcl/sample_consensus/sac_model_circle.h>
-#include <utils_laser_processing/laser_beam.h>
+#include <utils_laser_processing/data/laser_beam.h>
 
 namespace lib_laser_processing {
 
