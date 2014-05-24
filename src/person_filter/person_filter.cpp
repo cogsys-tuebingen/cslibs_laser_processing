@@ -12,7 +12,7 @@
 #include <Eigen/LU>
 
 // Project
-#include "person_filter.h"
+#include <utils_laser_processing/person_filter/person_filter.h>
 
 using namespace Eigen;
 using namespace std;

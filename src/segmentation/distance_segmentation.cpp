@@ -6,7 +6,7 @@
  */
 
 // Project
-#include "distance_segmentation.h"
+#include <utils_laser_processing/segmentation/distance_segmentation.h>
 
 namespace lib_laser_processing {
 
