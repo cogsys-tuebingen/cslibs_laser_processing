@@ -15,17 +15,21 @@ namespace YAML {
 
 template <typename Fp, typename Key>
 inline Fp readFloatSafe(const Node& node, const Key& key) {
-    std::string str = node[key].template as<std::string>();
-    if(str == "inf") {
-        return std::numeric_limits<Fp>::infinity();
-    } else if(str == "-inf") {
-        return -std::numeric_limits<Fp>::infinity();
-    } else if(str == "nan") {
-        return std::numeric_limits<Fp>::signaling_NaN();
-    } else if(str == "-nan") {
-        return -std::numeric_limits<Fp>::signaling_NaN();
-    } else {
+    try {
         return node[key].template as<Fp>();
+    } catch(const YAML::BadConversion& e) {
+        std::string str = node[key].template as<std::string>();
+        if(str == "inf") {
+            return std::numeric_limits<Fp>::infinity();
+        } else if(str == "-inf") {
+            return -std::numeric_limits<Fp>::infinity();
+        } else if(str == "nan") {
+            return std::numeric_limits<Fp>::signaling_NaN();
+        } else if(str == "-nan") {
+            return -std::numeric_limits<Fp>::signaling_NaN();
+        } else {
+            throw;
+        }
     }
 }
 
@@ -35,25 +39,23 @@ struct convert<lib_laser_processing::LaserBeam> {
         Node node;
         node.push_back(rhs.range);
         node.push_back(rhs.yaw);
-        node.push_back(rhs.valid);
-        node.push_back(rhs.pos(0));
-        node.push_back(rhs.pos(1));
         return node;
     }
 
     static bool decode(const Node& node, lib_laser_processing::LaserBeam& rhs) {
-        if(!node.IsSequence() || node.size() != 5) {
+        if(!node.IsSequence()) {
             return false;
         }
 
         rhs.range = readFloatSafe<float>(node, 0);
 
         rhs.yaw = readFloatSafe<float>(node, 1);
-        rhs.valid = node[2].as<bool>();
+        rhs.valid = rhs.range >= 0;
 
-        double x = readFloatSafe<float>(node, 3);
-        double y = readFloatSafe<float>(node, 4);
-        rhs.pos = Eigen::Vector2d(x, y);
+        if(rhs.valid) {
+            rhs.pos = Eigen::Vector2d(std::cos(rhs.yaw) * rhs.range, std::sin(rhs.yaw) * rhs.range);
+        }
+
         return true;
     }
 };
