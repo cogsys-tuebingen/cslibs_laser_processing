@@ -3,7 +3,7 @@
 
 using namespace lib_laser_processing;
 
-void LabeledScan::init(Scan &other)
+void LabeledScan::init(const Scan &other)
 {
     Scan::operator= (other);
 
