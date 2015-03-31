@@ -63,7 +63,7 @@ inline void polarToCartesian(const std::vector<float> &reading, const float angu
  */
 inline double distance(const std::vector<LaserBeam>::const_iterator &first, const std::vector<LaserBeam>::const_iterator &second)
 {
-    return (first->pos - second->pos).norm();
+    return (Eigen::Vector2d(first->pos_x, first->pos_y) - Eigen::Vector2d(second->pos_x, second->pos_y)).norm();
 }
 
 /**
@@ -81,7 +81,7 @@ inline bool withinLineFit(const std::vector<LaserBeam>::const_iterator &first, c
 
     bool fitting = true;
     for(std::vector<LaserBeam>::const_iterator it = first; it != second ; ++it) {
-        fitting &= (line.distance(it->pos) < sigma);
+        fitting &= (line.distance(Eigen::Vector2d(it->pos_x, it->pos_y)) < sigma);
     }
 
     return fitting;
@@ -100,8 +100,8 @@ inline void regression2D(const std::vector<LaserBeam>::const_iterator &points_be
 {
     std::vector<LaserBeam>::const_iterator back_it = points_end;
     --back_it;
-    Eigen::Vector2d front = points_begin->pos;
-    Eigen::Vector2d back  = back_it->pos;
+    Eigen::Vector2d front (points_begin->pos_x, points_end->pos_y);
+    Eigen::Vector2d back (back_it->pos_x, back_it->pos_y);
 
     unsigned int size = std::distance(points_begin, points_end);
     Eigen::MatrixXd A(size, 2);
@@ -115,16 +115,16 @@ inline void regression2D(const std::vector<LaserBeam>::const_iterator &points_be
         int i = 0;
         for(std::vector<LaserBeam>::const_iterator it = points_begin ; it != points_end ; ++it, ++i)
         {
-            A(i,1) = it->pos.x();
-            b(i)   = it->pos.y();
+            A(i,1) = it->pos_x;
+            b(i)   = it->pos_y;
         }
     } else {
         /// SOLVE FOR Y
         int i = 0;
         for(std::vector<LaserBeam>::const_iterator it = points_begin ; it != points_end ; ++it, ++i)
         {
-            A(i,1) = it->pos.y();
-            b(i)   = it->pos.x();
+            A(i,1) = it->pos_y;
+            b(i)   = it->pos_x;
         }
     }
 

@@ -16,8 +16,8 @@ inline void fit(const std::vector<LaserBeam> &input, Eigen::Vector3d &output, do
     PointCloud<PointXY>::Ptr cloud( new PointCloud<PointXY> );
     for(std::vector<LaserBeam>::const_iterator it = input.begin() ; it != input.end() ; ++it) {
         PointXY p;
-        p.x = it->pos.x();
-        p.y = it->pos.y();
+        p.x = it->pos_x;
+        p.y = it->pos_y;
         cloud->push_back(p);
     }
 

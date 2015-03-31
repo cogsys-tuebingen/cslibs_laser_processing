@@ -20,8 +20,6 @@ namespace lib_laser_processing {
  */
 class LaserBeam {
 public:
-	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
     /**
      * Create a laser beam. All values will be initialized to false/zero.
      */
@@ -47,8 +45,8 @@ public:
     bool valid;
 
     /// Position in cartesian coordinates [m x m]
-    Eigen::Vector2d pos;
-
+    double pos_x;
+    double pos_y;
 };
 
 } // namespace

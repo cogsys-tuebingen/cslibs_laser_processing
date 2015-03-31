@@ -53,7 +53,8 @@ struct convert<lib_laser_processing::LaserBeam> {
         rhs.valid = rhs.range >= 0;
 
         if(rhs.valid) {
-            rhs.pos = Eigen::Vector2d(std::cos(rhs.yaw) * rhs.range, std::sin(rhs.yaw) * rhs.range);
+            rhs.pos_x = std::cos(rhs.yaw) * rhs.range;
+            rhs.pos_y = std::sin(rhs.yaw) * rhs.range;
         }
 
         return true;

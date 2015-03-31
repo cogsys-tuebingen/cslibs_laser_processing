@@ -6,7 +6,7 @@ find_package(catkin REQUIRED COMPONENTS cmake_modules)
 find_package(Boost REQUIRED)
 find_package(Eigen REQUIRED)
 
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 catkin_package(
     INCLUDE_DIRS include
