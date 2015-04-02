@@ -120,6 +120,8 @@ struct convert<lib_laser_processing::Scan> {
         rhs.range_min = readFloatSafe<float>(node, "range_min");
         rhs.range_max = readFloatSafe<float>(node, "range_max");
 
+        rhs.range_min = std::max(rhs.range_min, 0.01f);
+
         rhs.rays = node["ranges"].as<std::vector<lib_laser_processing::LaserBeam> >();
         rhs.valid = node["valid"].as<bool>();
         return true;

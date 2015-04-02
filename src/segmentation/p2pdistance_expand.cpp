@@ -24,7 +24,7 @@ void P2PDistanceExpand::segmentation(const Scan& scan, std::vector<Segment> &seg
         std::vector<LaserBeam>::const_iterator root = scan.rays.begin();
 
         for(; root != scan.rays.end() ; ++root) {
-            if(root->range >= scan.range_min && root->range <= scan.range_max) {
+            if(root->valid) {
                 break;
             }
         }
@@ -36,7 +36,7 @@ void P2PDistanceExpand::segmentation(const Scan& scan, std::vector<Segment> &seg
         Segment buffer;
         buffer.rays.push_back(*last);
 
-        int expand = (int)asin(max_distance_ / root->range / scan.angle_increment);
+        int expand = (int)asin((max_distance_ / root->range) / scan.angle_increment);
         std::vector<LaserBeam>::const_iterator limit = root + expand;
 
         for( ; curr != scan.rays.end() ; ++curr) {
@@ -46,6 +46,16 @@ void P2PDistanceExpand::segmentation(const Scan& scan, std::vector<Segment> &seg
                 }
                 buffer.rays.clear();
                 root = curr;
+                for(; root != scan.rays.end() ; ++root) {
+                    if(root->valid) {
+                        break;
+                    }
+                }
+
+                if(root == scan.rays.end()) {
+                    break;
+                }
+
                 expand = (int)(asin(max_distance_ / root->range ) / scan.angle_increment);
                 limit = root + expand;
             } else if(utils::distance(last, curr) < max_distance_) {
