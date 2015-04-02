@@ -13,7 +13,8 @@ LaserBeam::LaserBeam(const Eigen::Vector2d& pos)
     : range( std::sqrt(pos.dot(pos)) ),
       yaw( std::atan2(pos(1), pos(0)) ),
       valid( true ),
-      pos( pos )
+      pos_x( pos(0) ),
+      pos_y( pos(1) )
 {}
 
 
@@ -21,5 +22,6 @@ LaserBeam::LaserBeam(float angle, float range)
     : range( range ),
       yaw( angle ),
       valid( true ),
-      pos( Eigen::Vector2d(std::cos(angle) * range, std::sin(angle) * range) )
+      pos_x(std::cos(angle) * range),
+      pos_y(std::sin(angle) * range)
 {}
