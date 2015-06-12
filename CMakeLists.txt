@@ -4,19 +4,19 @@ project(utils_laser_processing)
 find_package(catkin REQUIRED COMPONENTS cmake_modules)
 
 find_package(Boost REQUIRED)
-find_package(Eigen REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 set(CMAKE_BUILD_TYPE Release)
 
 catkin_package(
-    INCLUDE_DIRS include
+    INCLUDE_DIRS include ${EIGEN3_INCLUDE_DIR}
     LIBRARIES utils_laser_processing
-    DEPENDS Eigen
+    DEPENDS Eigen3
 )
 
 include_directories(include
     ${catkin_INCLUDE_DIRS}
-    ${EIGEN_INCLUDE_DIR}
+    ${EIGEN3_INCLUDE_DIR}
 )
 
 
