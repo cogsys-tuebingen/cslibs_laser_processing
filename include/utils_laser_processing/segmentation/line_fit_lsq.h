@@ -33,8 +33,6 @@ protected:
     LSQ    lsq_;
     double delta_d_;        /// point to point distance threshold for intial point sets
     double delta_var_;      /// variance threshold for line fit
-
-    void pushbackLineSegment(Eigen::ParametrizedLine<double, 2> line, std::vector<Segment> &segments);
 };
 }
 #endif // LINE_FIT_H

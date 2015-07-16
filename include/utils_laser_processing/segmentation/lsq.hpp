@@ -45,12 +45,9 @@ struct LSQ {
         const double theta_x = syy - sxx;
         const double theta_y = -2.0 * sxy;
 
-        theta = 0.5 * atan2(-2.0 * theta_y, theta_x);
+        theta = 0.5 * atan2(theta_y, theta_x);
         rho   = mean_x * cos(theta) + mean_y * sin(theta);
-        var   = 0.5 * n_inv *
-                (this->sxx + this->syy -
-                 n * (mean_x * mean_x + mean_y * mean_y) -
-                 sqrt(theta_y * theta_y + theta_x * theta_x));
+        var   = 0.5 * n_inv * (sxx + syy - sqrt(4.0 * sxy * sxy + (syy - sxx) * (syy - sxx)));
 
     }
 

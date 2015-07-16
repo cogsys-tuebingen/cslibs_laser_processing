@@ -68,12 +68,13 @@ void LineFitLSQ::segmentation(const Scan& scan, std::vector<Segment> &segments)
         }
         /// APPEND TO LINE WHEN CONDITIONS ARE FULFILLED
         while(k_2 < n) {
-            ++k_0;++k_1;++k_2;
+            ++k_2;
 
-            while((!beams[k_2].valid ||
-                   std::isnan(beams[k_2].range) ||
-                   std::isinf(beams[k_2].range)) && k_2 < n)
-                ++k_2;
+            if(beams[k_2].range > scan.range_max ||
+                    beams[k_2].range < scan.range_min)
+                continue;
+
+            ++k_0;++k_1;
 
             if(distance::euclidean(beams[k_2], beams[k_1]) < delta_d_ &&
                distance::line(beams[k_2], lsq_) < delta_d_) {
@@ -81,13 +82,10 @@ void LineFitLSQ::segmentation(const Scan& scan, std::vector<Segment> &segments)
                 lsq_.update();
                 buffer.rays.push_back(beams[k_2]);
             } else {
-                std::cout << "::: " << beams[k_2].range << " " << beams[k_2].valid << std::endl;
-                std::cout << "+++ " << distance::euclidean(beams[k_2], beams[k_1]) << std::endl;
-                std::cout << "--- " << distance::line(beams[k_2], lsq_) << std::endl;
-
                 segments.push_back(buffer);
                 lsq_.reset();
                 buffer.rays.clear();
+
                 k_0 = k_2;
                 k_1 = k_0 + 1;
                 k_2 = k_0 + 2;
@@ -97,11 +95,4 @@ void LineFitLSQ::segmentation(const Scan& scan, std::vector<Segment> &segments)
     }
     if(buffer.rays.size() > 0)
         segments.push_back(buffer);
-}
-
-void LineFitLSQ::pushbackLineSegment(Eigen::ParametrizedLine<double, 2> line, std::vector<Segment> &segments)
-{
-    segments.push_back(Segment());
-    segments.back().rays.push_back(line.origin());
-    segments.back().rays.push_back(LaserBeam(line.origin() + line.direction()));
 }
