@@ -19,7 +19,7 @@ public:
 
 public:
     Scan();
-    Scan(const std::vector<float>& ranges, float angle_min, float angle_increment);
+    Scan(const std::vector<float>& ranges, float angle_min, float angle_increment, float min_range, float max_range);
 
     void getRanges(std::vector<float> &out) const;
 

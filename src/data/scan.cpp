@@ -9,15 +9,21 @@ Scan::Scan()
 
 }
 
-Scan::Scan(const std::vector<float> &ranges, float angle_min, float angle_increment)
-    : angle_min(angle_min), angle_max(angle_min + angle_increment * ranges.size()), angle_increment(angle_increment), valid(true)
+Scan::Scan(const std::vector<float> &ranges, float angle_min, float angle_increment, float min_range, float max_range)
+    : angle_min(angle_min), angle_max(angle_min + angle_increment * ranges.size()), angle_increment(angle_increment),
+      range_min(min_range), range_max(max_range), valid(true)
 {
     rays.resize(ranges.size());
 
     std::vector<LaserBeam>::iterator output = rays.begin();
     double angle = angle_min;
-    for(std::vector<float>::const_iterator input = ranges.begin(); input != ranges.end(); ++input, ++output) {
-        *output = LaserBeam(angle, *input);
+    for(std::vector<float>::const_iterator range = ranges.begin(); range != ranges.end(); ++range, ++output) {
+        double r = *range;
+        if(r > range_min && r < range_max) {
+            *output = LaserBeam(angle, *range);
+        } else {
+            *output = LaserBeam();
+        }
         angle += angle_increment;
     }
 }
