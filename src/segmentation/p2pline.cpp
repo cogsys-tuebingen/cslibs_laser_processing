@@ -33,9 +33,9 @@ void P2PLine::segmentation(const Scan& scan, std::vector<Segment> &segments)
 
     segment.rays.push_back(*first);
     while(true) {
-        Eigen::Vector2d direction(second->pos_x - first->pos_x, second->pos_y - first->pos_y);
+        Eigen::Vector2d direction(second->posX() - first->posX(), second->posY() - first->posY());
         direction.normalize();
-        line = Eigen::ParametrizedLine<double,2>(Eigen::Vector2d(first->pos_x, first->pos_y), direction);
+        line = Eigen::ParametrizedLine<double,2>(Eigen::Vector2d(first->posX(), first->posY()), direction);
 
         if(second == end) {
             segments.push_back(segment);

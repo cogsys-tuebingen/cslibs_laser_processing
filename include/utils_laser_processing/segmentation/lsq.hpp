@@ -26,11 +26,11 @@ struct LSQ {
 
     void add(const LaserBeam &beam)
     {
-        sxx   += beam.pos_x * beam.pos_x;
-        syy   += beam.pos_y * beam.pos_y;
-        sxy   += beam.pos_x * beam.pos_y;
-        sum_x += beam.pos_x;
-        sum_y += beam.pos_y;
+        sxx   += beam.posX() * beam.posX();
+        syy   += beam.posY() * beam.posY();
+        sxy   += beam.posX() * beam.posY();
+        sum_x += beam.posX();
+        sum_y += beam.posY();
         ++n;
     }
 

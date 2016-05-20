@@ -68,7 +68,7 @@ bool LegDetector::classify(const Segment &segment, Vector2d& pos)
     // Compute center of mass (COM)
     Vector2d com( Vector2d::Zero());
     for ( std::vector<LaserBeam>::const_iterator beam = segment.rays.begin(); beam != segment.rays.end(); ++beam ) {
-        com += Eigen::Vector2d(beam->pos_x, beam->pos_y);
+        com += Eigen::Vector2d(beam->posX(), beam->posY());
     }
 
     com /= static_cast<double> (segment.rays.size());
@@ -79,11 +79,11 @@ bool LegDetector::classify(const Segment &segment, Vector2d& pos)
     double d;
     double count = 0;
     for ( std::vector<LaserBeam>::const_iterator beam = segment.rays.begin(); beam != segment.rays.end(); ++beam ) {
-        if ( !beam->valid ) {
+        if ( !beam->valid() ) {
             continue;
         }
 
-        d = (com - Eigen::Vector2d(beam->pos_x, beam->pos_y)).norm();
+        d = (com - Eigen::Vector2d(beam->posX(), beam->posY())).norm();
         avr += d;
         if ( max < d ) {
             max = d;
@@ -119,10 +119,10 @@ bool LegDetector::classify(const Segment &segment, Vector2d& pos)
     // Standard deviation
     accumulator_set<double, stats<tag::variance> > dists;
     for ( std::vector<LaserBeam>::const_iterator beam = segment.rays.begin(); beam != segment.rays.end(); ++beam ) {
-        if ( !beam->valid ) {
+        if ( !beam->valid() ) {
             continue;
         }
-        dists((center - Eigen::Vector2d(beam->pos_x, beam->pos_y)).norm());
+        dists((center - Eigen::Vector2d(beam->posX(), beam->posY())).norm());
     }
     double std_dev = std::sqrt( variance( dists ));
 

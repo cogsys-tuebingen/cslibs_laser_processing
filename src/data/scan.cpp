@@ -34,6 +34,6 @@ void Scan::getRanges(std::vector<float> &out) const
 
     std::vector<float>::iterator output = out.begin();
     for(std::vector<LaserBeam>::const_iterator input = rays.begin(); input != rays.end(); ++input, ++output) {
-        *output = input->range;
+        *output = input->range();
     }
 }

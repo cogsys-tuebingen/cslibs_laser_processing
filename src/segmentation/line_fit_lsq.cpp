@@ -22,13 +22,13 @@ namespace distance {
 inline double euclidean(const LaserBeam &b1,
                         const LaserBeam &b2)
 {
-    return hypot(b1.pos_x - b2.pos_x, b1.pos_y - b2.pos_y);
+    return hypot(b1.posX() - b2.posX(), b1.posY() - b2.posY());
 }
 inline double line(const LaserBeam &b,
                    const LSQ &lsq)
 {
-    return fabs(b.pos_x * cos(lsq.theta) +
-                b.pos_y * sin(lsq.theta) -
+    return fabs(b.posX() * cos(lsq.theta) +
+                b.posY() * sin(lsq.theta) -
                 lsq.rho);
 }
 }
@@ -70,8 +70,8 @@ void LineFitLSQ::segmentation(const Scan& scan, std::vector<Segment> &segments)
         while(k_2 < n) {
             ++k_2;
 
-            if(beams[k_2].range > scan.range_max ||
-                    beams[k_2].range < scan.range_min)
+            if(beams[k_2].range() > scan.range_max ||
+                    beams[k_2].range() < scan.range_min)
                 continue;
 
             ++k_0;++k_1;

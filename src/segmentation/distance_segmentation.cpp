@@ -25,8 +25,8 @@ void DistanceSegmentation::segmentation(const Scan& scan, std::vector<Segment> &
     int end = scan.rays.size() - 1;
     for ( int i = 0; i < end - 1; ++i ) {
         // End of segment?
-        if ( !scan.rays[i+1].valid
-             || std::abs( scan.rays[i].range - scan.rays[i+1].range ) > threshold_ ) {
+        if ( !scan.rays[i+1].valid()
+             || std::abs( scan.rays[i].range() - scan.rays[i+1].range() ) > threshold_ ) {
             segments.push_back( s );
             start = i + 1;
             length = 1;

@@ -37,8 +37,8 @@ template<>
 struct convert<lib_laser_processing::LaserBeam> {
     static Node encode(const lib_laser_processing::LaserBeam& rhs) {
         Node node;
-        node.push_back(rhs.range);
-        node.push_back(rhs.yaw);
+        node.push_back(rhs.range());
+        node.push_back(rhs.yaw());
         return node;
     }
 
@@ -47,15 +47,10 @@ struct convert<lib_laser_processing::LaserBeam> {
             return false;
         }
 
-        rhs.range = readFloatSafe<float>(node, 0);
+        float  range  = readFloatSafe<float>(node, 0);
+        float  yaw    = readFloatSafe<float>(node, 1);
+        rhs = lib_laser_processing::LaserBeam(yaw, range);
 
-        rhs.yaw = readFloatSafe<float>(node, 1);
-        rhs.valid = rhs.range >= 0;
-
-        if(rhs.valid) {
-            rhs.pos_x = std::cos(rhs.yaw) * rhs.range;
-            rhs.pos_y = std::sin(rhs.yaw) * rhs.range;
-        }
 
         return true;
     }

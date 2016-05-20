@@ -35,18 +35,36 @@ public:
      */
     LaserBeam(float angle, float range);
 
+
+    float range() const;
+
+    float yaw() const;
+
+    double posX() const;
+
+    double posY() const;
+
+    bool valid() const;
+
+    bool invalid() const;
+
+    void invalidate();
+
+
+private:
     /// Range [m] in laser coordinate system
-    float range;
+    float range_;
 
     /// Counter clockwise yaw angle, relative to x axis [rad] in laser coordinate system
-    float yaw;
-
-    /// Flag if range measurement is valid
-    bool valid;
+    float yaw_;
 
     /// Position in cartesian coordinates [m x m]
-    double pos_x;
-    double pos_y;
+    double pos_x_;
+    double pos_y_;
+
+
+
+
 };
 
 } // namespace
