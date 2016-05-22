@@ -42,6 +42,11 @@ double LaserBeam::posY() const
     return pos_y_;
 }
 
+Eigen::Vector2d LaserBeam::pos() const
+{
+    return Eigen::Vector2d(pos_x_, pos_y_);
+}
+
 bool LaserBeam::valid() const
 {
     return range_ > 0.0;

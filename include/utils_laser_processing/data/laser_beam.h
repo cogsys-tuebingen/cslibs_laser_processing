@@ -44,6 +44,8 @@ public:
 
     double posY() const;
 
+    Eigen::Vector2d pos() const;
+
     bool valid() const;
 
     bool invalid() const;
