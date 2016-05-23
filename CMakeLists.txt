@@ -44,7 +44,7 @@ add_library(utils_laser_processing
     src/segmentation/p2pdistance_expand.cpp
     src/segmentation/line_fit.cpp
     src/segmentation/line_fit_lsq.cpp
-    src/segmentation/ellipsoid.cpp
+    src/segmentation/segment_length.cpp
 
     src/person_filter/leg_detector.cpp
     src/person_filter/person_detector.cpp

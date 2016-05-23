@@ -35,20 +35,22 @@ void LineFit::segmentation(const Scan& scan, std::vector<Segment> &segments)
             pushbackLineSegment(last_line, segments);
             return;
         } else {
-            double dist = utils::distance(last_fit, second);
-            if(dist > max_distance_) {
-                segments.push_back(buffer);
-                buffer.rays.clear();
-                first       = second;
-                last_fit    = first;
-            } else if(!utils::withinLineFit(first, second  + 1, line, sigma_)) {
-                segments.push_back(buffer);
-                buffer.rays.clear();
-                first = last_fit;
-            } else {
-                buffer.rays.push_back(*second);
-                last_fit = second;
-                last_line = line;
+            if(second->valid()) {
+                double dist = utils::distance(last_fit, second);
+                if(dist > max_distance_) {
+                    segments.push_back(buffer);
+                    buffer.rays.clear();
+                    first       = second;
+                    last_fit    = first;
+                } else if(!utils::withinLineFit(first, second  + 1, line, sigma_)) {
+                    segments.push_back(buffer);
+                    buffer.rays.clear();
+                    first = last_fit;
+                } else {
+                    buffer.rays.push_back(*second);
+                    last_fit = second;
+                    last_line = line;
+                }
             }
             ++second;
         }

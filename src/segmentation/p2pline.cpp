@@ -41,25 +41,26 @@ void P2PLine::segmentation(const Scan& scan, std::vector<Segment> &segments)
             segments.push_back(segment);
             return;
         } else {
-            double dist = utils::distance(last_fit, second);
+            if(second->valid()) {
+                double dist = utils::distance(last_fit, second);
+                if(dist > max_distance_) {
+                    segments.push_back(segment);
+                    first       = second;
+                    last_fit    = first;
+                    /// BUFFER
+                    segment.rays.clear();
+                    segment.rays.push_back(*first);
+                } else if(!utils::withinLineFit(first, second + 1, line, sigma_)) {
+                    segments.push_back(segment);
+                    first = last_fit;
 
-            if(dist > max_distance_) {
-                segments.push_back(segment);
-                first       = second;
-                last_fit    = first;
-                /// BUFFER
-                segment.rays.clear();
-                segment.rays.push_back(*first);
-            } else if(!utils::withinLineFit(first, second + 1, line, sigma_)) {
-                segments.push_back(segment);
-                first = last_fit;
-
-                segment.rays.clear();
-                segment.rays.push_back(*first);
-            } else {
-                /// CONTINUE
-                segment.rays.push_back(*second);
-                last_fit = second;
+                    segment.rays.clear();
+                    segment.rays.push_back(*first);
+                } else {
+                    /// CONTINUE
+                    segment.rays.push_back(*second);
+                    last_fit = second;
+                }
             }
             ++second;
         }

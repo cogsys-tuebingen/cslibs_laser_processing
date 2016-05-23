@@ -24,6 +24,9 @@ void P2PDistance::segmentation(const Scan& scan, std::vector<Segment> &segments)
         Segment buffer;
         buffer.rays.push_back(*last);
         for( ; curr != scan.rays.end() ; ++curr) {
+            if(curr->invalid())
+                continue;
+
             if(utils::distance(last, curr) > max_distance_) {
                 segments.push_back(buffer);
                 buffer.rays.clear();

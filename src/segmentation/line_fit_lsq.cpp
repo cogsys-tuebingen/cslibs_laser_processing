@@ -50,19 +50,23 @@ void LineFitLSQ::segmentation(const Scan& scan, std::vector<Segment> &segments)
         /// FIND INITIAL POINTS
         buffer.rays.clear();
         while(k_2 < n) {
-            if(distance::euclidean(beams[k_1], beams[k_0]) < delta_d_ &&
-               distance::euclidean(beams[k_2], beams[k_1]) < delta_d_) {
-                lsq_.add(beams[k_0]);
-                lsq_.add(beams[k_1]);
-                lsq_.add(beams[k_2]);
-                lsq_.update();
-                if(lsq_.var < delta_var_) {
-                    buffer.rays.push_back(beams[k_0]);
-                    buffer.rays.push_back(beams[k_1]);
-                    buffer.rays.push_back(beams[k_2]);
-                    break;
+            if(beams[k_0].valid() &&
+                    beams[k_1].valid() &&
+                    beams[k_2].valid()) {
+                if(distance::euclidean(beams[k_1], beams[k_0]) < delta_d_ &&
+                        distance::euclidean(beams[k_2], beams[k_1]) < delta_d_) {
+                    lsq_.add(beams[k_0]);
+                    lsq_.add(beams[k_1]);
+                    lsq_.add(beams[k_2]);
+                    lsq_.update();
+                    if(lsq_.var < delta_var_) {
+                        buffer.rays.push_back(beams[k_0]);
+                        buffer.rays.push_back(beams[k_1]);
+                        buffer.rays.push_back(beams[k_2]);
+                        break;
+                    }
+                    lsq_.reset();
                 }
-                lsq_.reset();
             }
             ++k_0;++k_1;++k_2;
         }
@@ -77,7 +81,7 @@ void LineFitLSQ::segmentation(const Scan& scan, std::vector<Segment> &segments)
             ++k_0;++k_1;
 
             if(distance::euclidean(beams[k_2], beams[k_1]) < delta_d_ &&
-               distance::line(beams[k_2], lsq_) < delta_d_) {
+                    distance::line(beams[k_2], lsq_) < delta_d_) {
                 lsq_.add(beams[k_2]);
                 lsq_.update();
                 buffer.rays.push_back(beams[k_2]);
