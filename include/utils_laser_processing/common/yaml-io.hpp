@@ -63,6 +63,7 @@ struct convert<lib_laser_processing::Segment> {
         node.push_back(rhs.frame_id);
         node.push_back(rhs.rays);
         node.push_back(rhs.classification);
+        node.push_back(rhs.stamp_micro_seconds);
         return node;
     }
 
@@ -74,6 +75,7 @@ struct convert<lib_laser_processing::Segment> {
         rhs.frame_id = node[0].as<std::string>();
         rhs.rays = node[1].as<std::vector<lib_laser_processing::LaserBeam> >();
         rhs.classification = node[2].as<int>();
+        rhs.stamp_micro_seconds = node[3].as<uint64_t>();
         return true;
     }
 };

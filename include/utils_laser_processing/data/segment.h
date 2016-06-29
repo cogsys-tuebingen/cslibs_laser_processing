@@ -17,7 +17,8 @@ public:
     Segment();
 
     std::vector<LaserBeam> rays;
-    std::string            frame_id;
+    std::string frame_id;
+    uint64_t stamp_micro_seconds;
 
     int classification;
 };
