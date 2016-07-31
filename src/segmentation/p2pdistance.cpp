@@ -23,13 +23,16 @@ void P2PDistance::segmentation(const Scan& scan, std::vector<Segment> &segments)
         std::vector<LaserBeam>::const_iterator curr = last + 1;
         Segment buffer;
         buffer.rays.push_back(*last);
-        for( ; curr != scan.rays.end() ; ++curr) {
-            if(curr->invalid())
-                continue;
+        buffer.start_idx = 0;
 
+        for(std::size_t i = 1 ; i < scan.rays.size() ; ++i, ++curr) {
+            if(curr->invalid()) {
+                continue;
+            }
             if(utils::distance(last, curr) > max_distance_) {
                 segments.push_back(buffer);
                 buffer.rays.clear();
+                buffer.start_idx = i;
             }
             buffer.rays.push_back(*curr);
             last = curr;

@@ -71,6 +71,7 @@ void LineFitLSQ::segmentation(const Scan& scan, std::vector<Segment> &segments)
             ++k_0;++k_1;++k_2;
         }
         /// APPEND TO LINE WHEN CONDITIONS ARE FULFILLED
+        buffer.start_idx = k_0;
         while(k_2 < n) {
             ++k_2;
 
@@ -89,7 +90,6 @@ void LineFitLSQ::segmentation(const Scan& scan, std::vector<Segment> &segments)
                 segments.push_back(buffer);
                 lsq_.reset();
                 buffer.rays.clear();
-
                 k_0 = k_2;
                 k_1 = k_0 + 1;
                 k_2 = k_0 + 2;

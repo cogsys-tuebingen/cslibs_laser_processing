@@ -29,6 +29,7 @@ void LineFit::segmentation(const Scan& scan, std::vector<Segment> &segments)
     std::vector<LaserBeam>::const_iterator last_fit = first;
     std::vector<LaserBeam>::const_iterator end      = scan.rays.end();
     Segment buffer;
+    buffer.start_idx = 0;
     while(true) {
         utils::regression2D(first, second + 1, line);
         if(second == end) {
@@ -46,6 +47,7 @@ void LineFit::segmentation(const Scan& scan, std::vector<Segment> &segments)
                     segments.push_back(buffer);
                     buffer.rays.clear();
                     first = last_fit;
+                    buffer.start_idx = std::distance(scan.rays.begin(), first);
                 } else {
                     buffer.rays.push_back(*second);
                     last_fit = second;

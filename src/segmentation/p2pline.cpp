@@ -31,6 +31,8 @@ void P2PLine::segmentation(const Scan& scan, std::vector<Segment> &segments)
     std::vector<LaserBeam>::const_iterator end      = scan.rays.end();
     Segment segment;
 
+#warning Add segment index support!
+
     segment.rays.push_back(*first);
     while(true) {
         Eigen::Vector2d direction(second->posX() - first->posX(), second->posY() - first->posY());

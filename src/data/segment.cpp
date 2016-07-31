@@ -4,6 +4,7 @@
 using namespace lib_laser_processing;
 
 Segment::Segment()
-    : classification(0), stamp_micro_seconds(0)
+    : classification(0), stamp_micro_seconds(0),
+      start_idx(-1)
 {
 }

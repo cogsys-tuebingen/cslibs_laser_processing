@@ -21,6 +21,7 @@ public:
     uint64_t stamp_micro_seconds;
 
     int classification;
+    int start_idx;  /// inclusive index
 };
 
 }
