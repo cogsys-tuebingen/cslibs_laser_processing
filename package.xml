@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <package>
   <name>cslibs_laser_processing</name>
-  <version>0.0.1</version>
+  <version>1.0.0</version>
   <description>This package contains ROS independent classes for 2d scan processing.</description>
 
   <maintainer email="sebastian.buck@uni-tuebingen.de">buck</maintainer>
+  <maintainer email="richard.hanten@uni-tuebingen.de">hanten</maintainer>
 
   <license>BSD</license>
   <author email="sebastian.buck@uni-tuebingen.de">buck</author>
+  <author email="richard.hanten@uni-tuebingen.de">hanten</author>
+  <author email="henrik.marks@student.uni-tuebingen.de">marks</author>
 
   <buildtool_depend>catkin</buildtool_depend>
 </package>
