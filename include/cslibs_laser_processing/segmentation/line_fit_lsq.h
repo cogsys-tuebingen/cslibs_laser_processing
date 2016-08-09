@@ -2,7 +2,7 @@
 #define LINE_FIT_LSQ_H
 
 /// COMPONENT
-#include <utils_laser_processing/segmentation/segmentation.h>
+#include <cslibs_laser_processing/segmentation/segmentation.h>
 #include "lsq.hpp"
 
 namespace lib_laser_processing {

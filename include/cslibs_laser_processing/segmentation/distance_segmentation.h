@@ -12,9 +12,9 @@
 #include <vector>
 
 // Project
-#include <utils_laser_processing/data/laser_beam.h>
-#include <utils_laser_processing/data/scan.h>
-#include <utils_laser_processing/segmentation/segmentation.h>
+#include <cslibs_laser_processing/data/laser_beam.h>
+#include <cslibs_laser_processing/data/scan.h>
+#include <cslibs_laser_processing/segmentation/segmentation.h>
 
 namespace lib_laser_processing {
 

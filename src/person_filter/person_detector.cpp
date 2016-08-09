@@ -9,7 +9,7 @@
 #include <map>
 
 // Project
-#include <utils_laser_processing/person_filter/person_detector.h>
+#include <cslibs_laser_processing/person_filter/person_detector.h>
 
 // Lemon graph library
 #ifdef USE_LEMON_GRAPH_LIB

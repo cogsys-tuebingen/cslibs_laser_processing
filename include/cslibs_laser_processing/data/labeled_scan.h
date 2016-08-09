@@ -2,7 +2,7 @@
 #define LABELED_SCAN_H
 
 /// SYSTEM
-#include <utils_laser_processing/data/scan.h>
+#include <cslibs_laser_processing/data/scan.h>
 
 namespace lib_laser_processing
 {

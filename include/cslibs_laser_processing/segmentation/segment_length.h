@@ -1,8 +1,8 @@
-#ifndef ITERATIVE_SEGMENTATION_H
-#define ITERATIVE_SEGMENTATION_H
+#ifndef SEGMENTLENGTH_H
+#define SEGMENTLENGTH_H
 
 /// COMPONENT
-#include <utils_laser_processing/segmentation/segmentation.h>
+#include <cslibs_laser_processing/segmentation/segmentation.h>
 
 namespace lib_laser_processing {
 /**
@@ -10,7 +10,7 @@ namespace lib_laser_processing {
  *        that has the strategy to directly fit lines in to the scan. Those
  *        lines will be handled as segments.
  */
-class P2PLine : public LaserScanSegmentation
+class SegmentLength : public LaserScanSegmentation
 {
 public:
     /**
@@ -18,12 +18,13 @@ public:
      * @param sigma         the maximum distance to a fitted line
      * @param max_distance      the maximum distance between to points
      */
-    P2PLine(const double sigma, const double max_distance);
+    SegmentLength(const double max_distance,
+                  const double max_length);
 
     /**
      * @brief ~IterativeSegmentation destructor.
      */
-    virtual ~P2PLine();
+    virtual ~SegmentLength();
 
     /**
      * @brief Implemenation of the segmentation.
@@ -31,8 +32,8 @@ public:
     void segmentation(const Scan &scan, std::vector<Segment> &segments);
 
 protected:
-    double sigma_;          /// the maximum possible variance of points around the fitted line
     double max_distance_;   /// the maximum distance points may have to each other
+    double max_length_;
 };
 }
-#endif // ITERATIVE_SEGMENTATION_H
+#endif // SEGMENTLENGTH_H

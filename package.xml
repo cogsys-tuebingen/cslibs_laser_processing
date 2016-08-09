@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>utils_laser_processing</name>
+  <name>cslibs_laser_processing</name>
   <version>0.0.1</version>
-  <description>The utils_laser_processing package</description>
+  <description>This package contains ROS independent classes for 2d scan processing.</description>
 
   <maintainer email="sebastian.buck@uni-tuebingen.de">buck</maintainer>
 
@@ -10,6 +10,4 @@
   <author email="sebastian.buck@uni-tuebingen.de">buck</author>
 
   <buildtool_depend>catkin</buildtool_depend>
-
-  <build_depend>cmake_modules</build_depend>
 </package>

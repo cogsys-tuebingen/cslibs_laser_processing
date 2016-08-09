@@ -6,10 +6,10 @@
 #include <boost/shared_ptr.hpp>
 
 /// COMPONENT
-#include <utils_laser_processing/common/vector.hpp>
-#include <utils_laser_processing/data/laser_beam.h>
-#include <utils_laser_processing/data/scan.h>
-#include <utils_laser_processing/data/segment.h>
+#include <cslibs_laser_processing/common/vector.hpp>
+#include <cslibs_laser_processing/data/laser_beam.h>
+#include <cslibs_laser_processing/data/scan.h>
+#include <cslibs_laser_processing/data/segment.h>
 
 /**
  * @brief The LaserScanSegmentation class is representing an interface for computing laser scans,

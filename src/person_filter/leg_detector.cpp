@@ -16,7 +16,7 @@
 #include <boost/accumulators/statistics.hpp>
 
 // Project
-#include <utils_laser_processing/person_filter/leg_detector.h>
+#include <cslibs_laser_processing/person_filter/leg_detector.h>
 
 using namespace Eigen;
 using namespace boost::accumulators;

@@ -4,7 +4,7 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <vector>
-#include <utils_laser_processing/data/laser_beam.h>
+#include <cslibs_laser_processing/data/laser_beam.h>
 
 namespace lib_laser_processing {
 namespace utils {

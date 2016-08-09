@@ -1,8 +1,8 @@
-#ifndef P2PDISTANCE_H
-#define P2PDISTANCE_H
+#ifndef P2PDISTANCE_EXPAND_H
+#define P2PDISTANCE_EXPAND_H
 
 /// COMPONENT
-#include <utils_laser_processing/segmentation/segmentation.h>
+#include <cslibs_laser_processing/segmentation/segmentation.h>
 
 /**
  * @brief The P2PDistancesegmentation class represents an algorithm that
@@ -11,19 +11,19 @@
  *        split.
  */
 namespace lib_laser_processing {
-class P2PDistance : public LaserScanSegmentation
+class P2PDistanceExpand : public LaserScanSegmentation
 {
 public:
     /**
      * @brief P2PDistancesegmentation constructor.
      * @param max_distance      the maximum distance that may be reached
      */
-    P2PDistance(const double max_distance);
+    P2PDistanceExpand(const double max_distance);
 
     /**
      * ~P2PDistancesegmentation desctructor.
      */
-    virtual ~P2PDistance();
+    virtual ~P2PDistanceExpand();
 
     /**
      * @brief Implementation of the segmentation.
@@ -34,4 +34,4 @@ protected:
     double  max_distance_;      /// the maximum distance between two scan points
 };
 }
-#endif // P2PDISTANCE_H
+#endif // P2PDISTANCE_EXPAND_H

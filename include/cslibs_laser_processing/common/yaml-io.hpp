@@ -2,10 +2,10 @@
 #define LASER_SCAN_YAMLIO_HPP
 
 /// PROJECT
-#include <utils_laser_processing/data/segment.h>
-#include <utils_laser_processing/data/laser_beam.h>
-#include <utils_laser_processing/data/scan.h>
-#include <utils_laser_processing/data/labeled_scan.h>
+#include <cslibs_laser_processing/data/segment.h>
+#include <cslibs_laser_processing/data/laser_beam.h>
+#include <cslibs_laser_processing/data/scan.h>
+#include <cslibs_laser_processing/data/labeled_scan.h>
 
 /// SYSTEM
 #include <yaml-cpp/yaml.h>

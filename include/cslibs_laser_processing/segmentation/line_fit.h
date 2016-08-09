@@ -2,7 +2,7 @@
 #define LINE_FIT_H
 
 /// COMPONENT
-#include <utils_laser_processing/segmentation/segmentation.h>
+#include <cslibs_laser_processing/segmentation/segmentation.h>
 
 namespace lib_laser_processing {
 /**

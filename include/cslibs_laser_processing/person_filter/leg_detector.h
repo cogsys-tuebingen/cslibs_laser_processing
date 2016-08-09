@@ -15,9 +15,9 @@
 #include <Eigen/Core>
 
 // Project
-#include <utils_laser_processing/data/laser_beam.h>
-#include <utils_laser_processing/segmentation/distance_segmentation.h>
-#include <utils_laser_processing/person_filter/leg.h>
+#include <cslibs_laser_processing/data/laser_beam.h>
+#include <cslibs_laser_processing/segmentation/distance_segmentation.h>
+#include <cslibs_laser_processing/person_filter/leg.h>
 
 namespace lib_laser_processing {
 
