@@ -13,4 +13,6 @@
   <author email="henrik.marks@student.uni-tuebingen.de">marks</author>
 
   <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>eigen</build_depend>
 </package>
