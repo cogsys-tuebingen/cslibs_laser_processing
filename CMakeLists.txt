@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(cslibs_laser_processing)
 
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
+
 find_package(catkin REQUIRED)
 
 find_package(Boost REQUIRED)
