@@ -8,6 +8,8 @@
 #include <cslibs_laser_processing/data/labeled_scan.h>
 
 /// SYSTEM
+// for newer boost versions, yaml.h needs explicit includes
+#include <boost/next_prior.hpp>
 #include <yaml-cpp/yaml.h>
 
 /// YAML
